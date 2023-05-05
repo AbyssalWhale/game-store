@@ -3,7 +3,7 @@ import { BsChevronDown } from "react-icons/bs";
 import usePlatforms, { Platform } from "../hooks/usePlatforms";
 
 interface Props {
-  onSelectPlatform: (genre: Platform) => void;
+  onSelectPlatform: (platform: Platform) => void;
   selectedPlatform: Platform | null;
 }
 

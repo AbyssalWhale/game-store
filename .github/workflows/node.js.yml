@@ -23,12 +23,12 @@ jobs:
         cache: 'npm'
     - run: npm ci
     - run: npm run build
-    - name: Upload S3    
-      uses: shallwefootball/s3-upload-action@master
-      id: S3
+    - name: Set AWS credentials
+      uses: aws-actions/configure-aws-credentials@v1
       with:
-          aws_key_id: ${{secrets.AWS_KEY_ID}}
-          aws_secret_access_key: ${{secrets.AWS_SECRET_ACCESS_KEY}}
-          aws_bucket: awoha.xyz
-          source_dir: dist/  
+        aws-access-key-id: ${{secrets.AWS_KEY_ID}}
+        aws-secret-access-key: ${{secrets.AWS_SECRET_ACCESS_KEY}}
+        aws-region: eu-central-1
+    - name: Copy to S3
+      run: aws s3 sync dist/ s3://awoha.xyz
     

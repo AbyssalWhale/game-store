@@ -18,7 +18,7 @@ interface Props {
 }
 
 const GenreList = ({ selectedGenre, onSelectGenre }: Props) => {
-  const { data, error, isLoading } = useGenres();
+  const { data, isLoading, error } = useGenres();
 
   if (error) return null;
 

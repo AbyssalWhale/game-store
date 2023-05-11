@@ -1,11 +1,9 @@
 # This workflow will do a clean installation of node dependencies, cache/restore them, build the source code and run tests across different versions of node
 # For more information see: https://docs.github.com/en/actions/automating-builds-and-tests/building-and-testing-nodejs
 
-name: Node.js CI
+name: Deploy and Test Game Store
 
 on:
-  push:
-    branches: [ "main" ]
   pull_request:
     branches: [ "main" ]
 
@@ -21,14 +19,16 @@ jobs:
       with:
         node-version: ${{ matrix.node-version }}
         cache: 'npm'
-    - run: npm ci
-    - run: npm run build
-    - name: Upload S3    
-      uses: shallwefootball/s3-upload-action@master
-      id: S3
+    - name: Running NPM CI
+      run: npm ci
+    - name: Running NPM Build
+      run: npm run build
+    - name: Setting AWS credentials
+      uses: aws-actions/configure-aws-credentials@v1
       with:
-          aws_key_id: ${{secrets.AWS_KEY_ID}}
-          aws_secret_access_key: ${{secrets.AWS_SECRET_ACCESS_KEY}}
-          aws_bucket: awoha.xyz
-          source_dir: dist/  
+        aws-access-key-id: ${{secrets.AWS_KEY_ID}}
+        aws-secret-access-key: ${{secrets.AWS_SECRET_ACCESS_KEY}}
+        aws-region: eu-central-1
+    - name: Sync with S3
+      run: aws s3 sync dist/ s3://awoha.xyz
     

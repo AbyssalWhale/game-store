@@ -23,3 +23,12 @@ jobs:
         cache: 'npm'
     - run: npm ci
     - run: npm run build
+    - name: Upload S3    
+      uses: shallwefootball/s3-upload-action@master
+      id: S3
+      with:
+          aws_key_id: ${{secrets.AWS_KEY_ID}}
+          aws_secret_access_key: ${{secrets.AWS_SECRET_ACCESS_KEY}}
+          aws_bucket: awoha.xyz
+          source_dir: dist/  
+    

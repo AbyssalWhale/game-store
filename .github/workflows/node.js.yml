@@ -9,26 +9,35 @@ on:
 
 jobs:
   build:
-
+    name: Build
     runs-on: ubuntu-latest
-
     steps:
-    - uses: actions/checkout@v3
-    - name: Use Node.js ${{ matrix.node-version }}
-      uses: actions/setup-node@v3
+        - uses: actions/checkout@v3
+        - name: Use Node.js ${{ matrix.node-version }}
+          uses: actions/setup-node@v3
+          with:
+            node-version: ${{ matrix.node-version }}
+            cache: 'npm'
+        - name: Running NPM CI
+          run: npm ci
+        - name: Running NPM Build
+          run: npm run build
+        - name: Setting AWS credentials
+          uses: aws-actions/configure-aws-credentials@v1
+          with:
+            aws-access-key-id: ${{secrets.AWS_KEY_ID}}
+            aws-secret-access-key: ${{secrets.AWS_SECRET_ACCESS_KEY}}
+            aws-region: eu-central-1
+        - name: Sync with S3
+          run: aws s3 sync dist/ s3://awoha.xyz
+  test:
+    name: Test
+    runs-on: ubuntu-latest
+    needs: build
+    steps:
+    - name: Checkout Tests
+      uses: actions/checkout@v2
       with:
-        node-version: ${{ matrix.node-version }}
-        cache: 'npm'
-    - name: Running NPM CI
-      run: npm ci
-    - name: Running NPM Build
-      run: npm run build
-    - name: Setting AWS credentials
-      uses: aws-actions/configure-aws-credentials@v1
-      with:
-        aws-access-key-id: ${{secrets.AWS_KEY_ID}}
-        aws-secret-access-key: ${{secrets.AWS_SECRET_ACCESS_KEY}}
-        aws-region: eu-central-1
-    - name: Sync with S3
-      run: aws s3 sync dist/ s3://awoha.xyz
+        repository: AbyssalWhale/python-pw
+        path: './python-tests'
     

@@ -50,7 +50,9 @@ jobs:
         pip install flake8 pytest-playwright
         python -m pip install playwright
     - name: Install playwright browsers
-      run: python -m playwright install
+      run: | 
+        python -m playwright install
+        npx playwright install-deps
     - name: Run Tests
       run: pytest './python-tests' 
       

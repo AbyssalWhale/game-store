@@ -48,13 +48,14 @@ jobs:
       run: |
         python -m pip install --upgrade pip
         pip install flake8 pytest-playwright
+        pip install pytest-reporter-html1
         python -m pip install playwright
     - name: Install playwright browsers
       run: | 
         python -m playwright install
         npx playwright install-deps
     - name: Run Tests
-      run: pytest -k test_homepage_canbeopened --report=report.html --template=html1/index.html 
+      run: pytest --report=pytestsreport.html --template=html1/index.html --output='tests-results' --junitxml="result.xml"
       
         
     

@@ -58,10 +58,9 @@ jobs:
     - name: Run Tests
       run: pytest './python-tests/' -m regression --junitxml=junit_results.xml --report=tests_result_report.html --template=html1/index.html -n auto
     - name: Publish Test Results
-      uses: EnricoMi/publish-unit-test-result-action@v2
-      if: always()
+      uses: EnricoMi/publish-unit-test-result-action@v2.7.0
       with:
         files: |
-          ./**/*.xml
+          /home/runner/work/game-store/game-store/*.xml
           ./**/*.trx
           ./**/*.json

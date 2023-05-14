@@ -76,4 +76,4 @@ jobs:
         aws-secret-access-key: ${{secrets.AWS_SECRET_ACCESS_KEY}}
         aws-region: eu-central-1
     - name: Publish Python Results to S3
-      run: aws s3 sync /home/runner/work/game-store/game-store/python_tests_result_report.html s3://awoha.xyz
+      run: aws s3 sync /home/runner/work/game-store/game-store s3://awoha.xyz --exclude='*' --include='*/python_tests_result_report.html'

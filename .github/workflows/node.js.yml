@@ -56,4 +56,12 @@ jobs:
         python -m playwright install
         npx playwright install-deps
     - name: Run Tests
-      run: pytest './python-tests/' -m regression --report=report.html --template=html1/index.html -n auto
+      run: pytest './python-tests/' -m regression --junitxml=junit_results.xml --report=tests_result_report.html --template=html1/index.html -n auto
+    - name: Publish Test Results
+      uses: EnricoMi/publish-unit-test-result-action@v2
+      if: always()
+      with:
+        files: |
+          ./**/*.xml
+          ./**/*.trx
+          ./**/*.json

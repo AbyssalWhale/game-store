@@ -55,7 +55,7 @@ jobs:
         python -m playwright install
         npx playwright install-deps
     - name: Run Tests
-      run: pytest --report=pytestsreport.html --template=html1/index.html --output='tests-results' --junitxml="result.xml"
+      run: pytest './python-tests/' --report=pytestsreport.html --template=html1/index.html --output='tests-results' --junitxml="result.xml"
       
         
     

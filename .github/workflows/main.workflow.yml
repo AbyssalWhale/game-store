@@ -66,7 +66,7 @@ jobs:
       uses: EnricoMi/publish-unit-test-result-action@v2.7.0
       with:
         files: |
-          /home/runner/work/game-store/game-store/*.xml
+          /home/runner/work/game-store/game-store/py-testResults/*.xml
           ./**/*.trx
           ./**/*.json
     - name: Setting AWS credentials

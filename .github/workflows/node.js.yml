@@ -49,13 +49,11 @@ jobs:
         python -m pip install --upgrade pip
         pip install flake8 pytest-playwright
         pip install pytest-reporter-html1
+        pip install pytest-xdist
         python -m pip install playwright
     - name: Install playwright browsers
       run: | 
         python -m playwright install
         npx playwright install-deps
     - name: Run Tests
-      run: pytest './python-tests/' --report=pytestsreport.html --template=html1/index.html --output='tests-results' --junitxml="result.xml"
-      
-        
-    
+      run: pytest './python-tests/' -m regression --report=report.html --template=html1/index.html -n auto

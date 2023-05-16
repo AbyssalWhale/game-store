@@ -26,13 +26,7 @@ steps:
     script: |
           echo  '$(System.DefaultWorkingDirectory)'
           dir
-- task: PublishBuildArtifacts@1
-  inputs:
-    TargetPath: '$(System.DefaultWorkingDirectory)/dist'
-    PathtoPublish: '$(Build.ArtifactStagingDirectory)'
-    ArtifactName: 'react-store'
-    publishLocation: 'Container'
 
 - publish: $(System.DefaultWorkingDirectory)/dist
   artifact: 'react-store'
-  displayName: PublishBuildArtifacts 2
+  displayName: Publish Build Artifacts 2

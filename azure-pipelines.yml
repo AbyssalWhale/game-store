@@ -28,8 +28,11 @@ steps:
           dir
 - task: PublishBuildArtifacts@1
   inputs:
+    TargetPath: '$(System.DefaultWorkingDirectory)/dist'
     PathtoPublish: '$(Build.ArtifactStagingDirectory)'
     ArtifactName: 'react-store'
     publishLocation: 'Container'
-    TargetPath: $(System.DefaultWorkingDirectory)/dist
-  
+
+- publish: $(System.DefaultWorkingDirectory)/dist
+  artifact: 'react-store'
+  displayName: PublishBuildArtifacts 2

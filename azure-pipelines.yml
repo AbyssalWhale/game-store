@@ -7,20 +7,26 @@ trigger:
 - main
 
 pool:
-  vmImage: windows-latest
+  vmImage: ubuntu-latest
 
 steps:
 - task: NodeTool@0
   inputs:
-    versionSpec: '10.x'
+    versionSpec: 'x.x'
   displayName: 'Install Node.js'
 
 - script: |
     npm install
+    npm ci
     npm run build
   displayName: 'npm install and build'
-- task: PublishBuildArtifacts@1
+- task: CmdLine@2
+  displayName: Print DefaultWorkingDirectory
   inputs:
-    PathtoPublish: '$(Build.ArtifactStagingDirectory)'
-    ArtifactName: 'react-store'
-    publishLocation: 'Container'
+    script: |
+          echo  '$(System.DefaultWorkingDirectory)'
+          dir
+
+- publish: $(System.DefaultWorkingDirectory)/dist
+  artifact: 'react-store'
+  displayName: Publish Build Artifacts 2

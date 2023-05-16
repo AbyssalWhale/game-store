@@ -20,6 +20,13 @@ steps:
     npm ci
     npm run build
   displayName: 'npm install and build'
+- task: CmdLine@2
+  displayName: Print DefaultWorkingDirectory
+  inputs:
+    script: |
+          echo  '$(System.DefaultWorkingDirectory)'
+          dir
+          dir subfoldername
 - task: PublishBuildArtifacts@1
   inputs:
     PathtoPublish: '$(Build.ArtifactStagingDirectory)'

@@ -102,6 +102,6 @@ jobs:
     - name: Install Playwright
       shell: pwsh
       run: |
-        ./automationtests/_AbyssalWhale.AutomationTests-PW/automation-tests-pw/Core/bin/Release/net7.0/playwright.ps1 install
+        .\automationtests\Core\bin\Release\net7.0\playwright.ps1
   
   

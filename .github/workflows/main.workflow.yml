@@ -106,7 +106,7 @@ jobs:
     - name: Print out TestsConfigurator 
       shell: pwsh
       run: |
-        ls .\automationtests\
+        ls /home/runner/work/game-store/game-store/automationtests/
     - name: Update .runsettings
       shell: pwsh
       run: |

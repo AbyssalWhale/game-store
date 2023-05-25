@@ -126,7 +126,7 @@ jobs:
     - name: Run Tests
       shell: pwsh
       run: |
-        dotnet test /home/runner/work/game-store/game-store/automationtests/RegressionTests/bin/Release/net7.0/RegressionTests.dll --logger "trx;logfilename=/home/runner/work/game-store/game-store/automationtests/dotnet-testResults/testResults.trx"
+        dotnet test /home/runner/work/game-store/game-store/automationtests/RegressionTests/bin/Release/net7.0/RegressionTests.dll --logger "trx;logfilename=/home/runner/work/game-store/game-store/automationtests/dotnet-testResults/testResults.trx" --settings "/home/runner/work/game-store/game-store/automationtests/TestsConfigurator/RunSettings/InstanceSettings.runsettings"
     - name: Publish Test Results
       uses: EnricoMi/publish-unit-test-result-action@v2.7.0
       with:

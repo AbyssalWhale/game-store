@@ -106,7 +106,7 @@ jobs:
     - name: Print out TestsConfigurator 
       shell: pwsh
       run: |
-        ls .\automationtests\TestsConfigurator\RunSettings\
+        ls .\automationtests\
     - name: Update .runsettings
       shell: pwsh
       run: |

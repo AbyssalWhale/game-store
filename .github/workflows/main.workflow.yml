@@ -103,10 +103,14 @@ jobs:
       shell: pwsh
       run: |
         .\automationtests\Core\bin\Release\net7.0\playwright.ps1 install
+    - name: Print out TestsConfigurator 
+      shell: pwsh
+      run: |
+        ls .\automationtests\TestsConfigurator\RunSettings\
     - name: Update .runsettings
       shell: pwsh
       run: |
-        $filePathToTask = ".\automationtests\TestsConfigurator\RunSettings\InstanceSettings.runsettings"
+        $filePathToTask = .\automationtests\TestsConfigurator\RunSettings\InstanceSettings.runsettings
         $xml = New-Object XML
         $xml.Load($filePathToTask)
         $xml.SelectSingleNode("//Parameter[@name='PublishToZephyr']").value="false"

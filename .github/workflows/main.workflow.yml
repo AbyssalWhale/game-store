@@ -131,6 +131,6 @@ jobs:
       uses: EnricoMi/publish-unit-test-result-action@v2.7.0
       with:
           files: |
-           .\automationtests\dotnet-testResults\*.trx
+           /home/runner/work/game-store/game-store/automationtests/dotnet-testResults/*.trx
   
   

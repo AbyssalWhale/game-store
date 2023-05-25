@@ -1,6 +1,5 @@
 # This workflow will do a clean installation of node dependencies, cache/restore them, build the source code and run tests across different versions of node
 # For more information see: https://docs.github.com/en/actions/automating-builds-and-tests/building-and-testing-nodejs
-
 name: Deploy and Test Game Store
 
 on:
@@ -8,30 +7,77 @@ on:
     branches: [ "main" ]
 
 jobs:
-  build:
-    name: Build
-    runs-on: ubuntu-latest
-    steps:
-        - uses: actions/checkout@v3
-        - name: Use Node.js ${{ matrix.node-version }}
-          uses: actions/setup-node@v3
-          with:
-            node-version: ${{ matrix.node-version }}
-            cache: 'npm'
-        - name: Running NPM CI
-          run: npm ci
-        - name: Running NPM Build
-          run: npm run build
-        - name: Setting AWS credentials
-          uses: aws-actions/configure-aws-credentials@v1
-          with:
-            aws-access-key-id: ${{secrets.AWS_KEY_ID}}
-            aws-secret-access-key: ${{secrets.AWS_SECRET_ACCESS_KEY}}
-            aws-region: eu-central-1
-        - name: Sync with S3
-          run: aws s3 sync dist/ s3://awoha.xyz
-  test:
-    name: Python Test
+  # build:
+  #   name: Build
+  #   runs-on: ubuntu-latest
+  #   steps:
+  #       - uses: actions/checkout@v3
+  #       - name: Use Node.js ${{ matrix.node-version }}
+  #         uses: actions/setup-node@v3
+  #         with:
+  #           node-version: ${{ matrix.node-version }}
+  #           cache: 'npm'
+  #       - name: Running NPM CI
+  #         run: npm ci
+  #       - name: Running NPM Build
+  #         run: npm run build
+  #       - name: Setting AWS credentials
+  #         uses: aws-actions/configure-aws-credentials@v1
+  #         with:
+  #           aws-access-key-id: ${{secrets.AWS_KEY_ID}}
+  #           aws-secret-access-key: ${{secrets.AWS_SECRET_ACCESS_KEY}}
+  #           aws-region: eu-central-1
+  #       - name: Sync with S3
+  #         run: aws s3 sync dist/ s3://awoha.xyz
+  # pytests:
+  #   name: Python Test
+  #   runs-on: ubuntu-latest
+  #   needs: build
+  #   permissions:
+  #       contents: read
+  #       issues: read
+  #       checks: write
+  #       pull-requests: write
+  #   steps:
+  #   - name: Set Up Python
+  #     uses: actions/setup-python@v2
+  #     with:
+  #       python-version: 3.9
+  #   - name: Checkout Tests
+  #     uses: actions/checkout@v2
+  #     with:
+  #       repository: AbyssalWhale/python-pw
+  #       path: './python-tests'
+  #   - name: Install Dependencies
+  #     run: |
+  #       python -m pip install --upgrade pip
+  #       pip install flake8 pytest-playwright
+  #       pip install pytest-reporter-html1
+  #       pip install pytest-xdist
+  #       python -m pip install playwright
+  #   - name: Install playwright browsers
+  #     run: | 
+  #       python -m playwright install
+  #       npx playwright install-deps
+  #   - name: Run Tests
+  #     run: pytest './python-tests/' -m regression --junitxml=./py-testResults/junit_results.xml --report=./py-testResults/python_tests_result_report.html --template=html1/index.html -n auto
+  #   - name: Publish Test Results
+  #     uses: EnricoMi/publish-unit-test-result-action@v2.7.0
+  #     with:
+  #       files: |
+  #         /home/runner/work/game-store/game-store/py-testResults/*.xml
+  #         ./**/*.trx
+  #         ./**/*.json
+  #   - name: Setting AWS credentials
+  #     uses: aws-actions/configure-aws-credentials@v1
+  #     with:
+  #       aws-access-key-id: ${{secrets.AWS_KEY_ID}}
+  #       aws-secret-access-key: ${{secrets.AWS_SECRET_ACCESS_KEY}}
+  #       aws-region: eu-central-1
+  #   - name: Publish Python Results to S3
+  #     run: aws s3 sync ./py-testResults/ s3://awoha.xyz
+  dotnettests:
+    name: .NetTests
     runs-on: ubuntu-latest
     needs: build
     permissions:
@@ -40,42 +86,14 @@ jobs:
         checks: write
         pull-requests: write
     steps:
-    - name: Set Up Python
-      uses: actions/setup-python@v2
-      with:
-        python-version: 3.9
-    - name: Checkout Tests
+    - name: Checkout DotNet Tests
       uses: actions/checkout@v2
       with:
-        repository: AbyssalWhale/python-pw
-        path: './python-tests'
-    - name: Install Dependencies
-      run: |
-        python -m pip install --upgrade pip
-        pip install flake8 pytest-playwright
-        pip install pytest-reporter-html1
-        pip install pytest-xdist
-        python -m pip install playwright
-    - name: Install playwright browsers
-      run: | 
-        python -m playwright install
-        npx playwright install-deps
-    - name: Run Tests
-      run: pytest './python-tests/' -m regression --junitxml=./py-testResults/junit_results.xml --report=./py-testResults/python_tests_result_report.html --template=html1/index.html -n auto
-    - name: Publish Test Results
-      uses: EnricoMi/publish-unit-test-result-action@v2.7.0
-      with:
-        files: |
-          /home/runner/work/game-store/game-store/py-testResults/*.xml
-          ./**/*.trx
-          ./**/*.json
-    - name: Setting AWS credentials
-      uses: aws-actions/configure-aws-credentials@v1
-      with:
-        aws-access-key-id: ${{secrets.AWS_KEY_ID}}
-        aws-secret-access-key: ${{secrets.AWS_SECRET_ACCESS_KEY}}
-        aws-region: eu-central-1
-    - name: Publish Python Results to S3
-      run: aws s3 sync ./py-testResults/ s3://awoha.xyz
-      
+        repository: AbyssalWhale/AutomationTests-PW
+        path: './automationtests'
+    - name: Setup .NET Core SDK
+      uses: actions/setup-dotnet@v3.1.0
+    - name: Setup NuGet.exe for use with actions
+      uses: NuGet/setup-nuget@v1.2.0
+
       

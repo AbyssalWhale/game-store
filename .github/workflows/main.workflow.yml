@@ -21,14 +21,14 @@ jobs:
           run: npm ci
         - name: Running NPM Build
           run: npm run build
-        - name: Setting AWS credentials
-          uses: aws-actions/configure-aws-credentials@v1
-          with:
-            aws-access-key-id: ${{secrets.AWS_KEY_ID}}
-            aws-secret-access-key: ${{secrets.AWS_SECRET_ACCESS_KEY}}
-            aws-region: eu-central-1
-        - name: Sync with S3
-          run: aws s3 sync dist/ s3://awoha.xyz
+        # - name: Setting AWS credentials
+        #   uses: aws-actions/configure-aws-credentials@v1
+        #   with:
+        #     aws-access-key-id: ${{secrets.AWS_KEY_ID}}
+        #     aws-secret-access-key: ${{secrets.AWS_SECRET_ACCESS_KEY}}
+        #     aws-region: eu-central-1
+        # - name: Sync with S3
+        #   run: aws s3 sync dist/ s3://awoha.xyz
   pytests:
     name: Run Regression Tests
     runs-on: ubuntu-latest
@@ -106,14 +106,13 @@ jobs:
       uses: EnricoMi/publish-unit-test-result-action@v2.7.0
       with:
         files: |
-          /home/runner/work/game-store/game-store/py-testResults/*.xml
-          /home/runner/work/game-store/game-store/automationtests/dotnet-testResults/*.trx
-          ./**/*.json
-    - name: Setting AWS credentials
-      uses: aws-actions/configure-aws-credentials@v1
-      with:
-        aws-access-key-id: ${{secrets.AWS_KEY_ID}}
-        aws-secret-access-key: ${{secrets.AWS_SECRET_ACCESS_KEY}}
-        aws-region: eu-central-1
-    - name: Publish Python Results to S3
-      run: aws s3 sync ./py-testResults/ s3://awoha.xyz
+          /home/runner/work/game-store/game-store/py-testResults/junit_results.xml
+          /home/runner/work/game-store/game-store/automationtests/dotnet-testResults/testResults.trx
+    # - name: Setting AWS credentials
+    #   uses: aws-actions/configure-aws-credentials@v1
+    #   with:
+    #     aws-access-key-id: ${{secrets.AWS_KEY_ID}}
+    #     aws-secret-access-key: ${{secrets.AWS_SECRET_ACCESS_KEY}}
+    #     aws-region: eu-central-1
+    # - name: Publish Python Results to S3
+    #   run: aws s3 sync ./py-testResults/ s3://awoha.xyz

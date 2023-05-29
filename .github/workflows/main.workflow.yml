@@ -78,7 +78,7 @@ jobs:
     #- name: Publish Python Results to S3
     #  run: aws s3 sync ./py-testResults/ s3://awoha.xyz
   run-dotnet-tests:
-    uses: ./.github/workflows/reusable-workflow.yml
+    uses: AbyssalWhale/AutomationTests-PW/.github/workflows/reusable-workflow.yml@main
     permissions:
         contents: read
         issues: read

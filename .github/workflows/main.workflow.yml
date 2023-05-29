@@ -33,6 +33,7 @@ jobs:
     uses: AbyssalWhale/python-pw/.github/workflows/reusable-workflow.yml@main
     needs: build
     with:
+        check-out-path: ./py-playwright
         publish-aws: true
     secrets:
         aws-bucket-region: "eu-central-1"

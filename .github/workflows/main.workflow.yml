@@ -77,10 +77,8 @@ jobs:
         aws-region: eu-central-1
     #- name: Publish Python Results to S3
     #  run: aws s3 sync ./py-testResults/ s3://awoha.xyz
-  dotnettests:
-    name: .NetTests
-    uses: AbyssalWhale/AutomationTests-PW/.github/workflows/reusable-workflow.yml@v1
-    needs: build
+  run-dotnet-tests:
+    uses: ./.github/workflows/reusable-workflow.yml
     permissions:
         contents: read
         issues: read

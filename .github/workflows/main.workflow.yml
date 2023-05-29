@@ -30,7 +30,7 @@ jobs:
         # - name: Sync with S3
         #   run: aws s3 sync dist/ s3://awoha.xyz
   python-playwright:
-    uses: /AbyssalWhale/python-pw/.github/workflows/reusable-workflow.yml@main
+    uses: AbyssalWhale/python-pw/.github/workflows/reusable-workflow.yml@main
     needs: build
     with:
         publish-aws: true

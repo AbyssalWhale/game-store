@@ -26,9 +26,9 @@ jobs:
           with:
             aws-access-key-id: ${{secrets.AWS_KEY_ID}}
             aws-secret-access-key: ${{secrets.AWS_SECRET_ACCESS_KEY}}
-            aws-region: eu-central-1
+            aws-region: ${{secrets.AWS_BUCKET_REGION}}
         - name: Sync with S3
-          run: aws s3 sync dist/ s3://awoha.xyz
+          run: aws s3 sync dist/ ${{secrets.AWS_BUCKET}}
   python-playwright:
     uses: AbyssalWhale/python-pw/.github/workflows/reusable-workflow.yml@main
     needs: build
@@ -36,8 +36,8 @@ jobs:
         check-out-path: ./py-playwright
         publish-aws: true
     secrets:
-        aws-bucket-region: "eu-central-1"
-        aws-bucket: "s3://awoha.xyz"
+        aws-bucket-region: ${{secrets.AWS_BUCKET_REGION}}
+        aws-bucket: ${{secrets.AWS_BUCKET}}
         aws-key: ${{secrets.AWS_KEY_ID}}
         aws-a-key: ${{secrets.AWS_SECRET_ACCESS_KEY}}
     permissions:

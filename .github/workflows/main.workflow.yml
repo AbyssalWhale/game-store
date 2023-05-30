@@ -56,4 +56,3 @@ jobs:
         checks: write
         pull-requests: write
     secrets: inherit
-    

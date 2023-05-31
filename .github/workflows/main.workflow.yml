@@ -50,6 +50,10 @@ jobs:
     needs: build
     with:
         check-out-path: ./dotnet-playwright
+        branch: main
+        zephyr-is-publishresults: false
+        zephyr-cycle-name: default
+        zephyr-cycle-comment: default
     permissions:
         contents: read
         issues: read

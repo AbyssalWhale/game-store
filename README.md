@@ -37,4 +37,4 @@ I would like to emphasize the following points:
 
 By highlighting these points, it is clear that the repository serves as a demonstration of skills rather than representing finalized or production-ready software.
 
-#Thank you for you time! 
+# Thank you for you time! 
